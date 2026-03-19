@@ -7,9 +7,36 @@
 #include "repaso.h"
 
 enum Referencia dondeEstaElPunto(int xc, int yc, int rc, int xp, int yp) {
+
+    int dx;
+    int dy;
+    int distanciaAlCuadrado;
+    int radioAlCuadrado;
+
+    dx = xp - xc;
+    dy = yp - yc;
+    distanciaAlCuadrado = (dx * dx) + (dy * dy);
+    radioAlCuadrado = rc * rc;
+
+    if (distanciaAlCuadrado < radioAlCuadrado)
+    {
+        return INTERNO;
+    }
+    else if (distanciaAlCuadrado == radioAlCuadrado)
+    {
+        return EN_CIRCUNFERENCIA;
+    }
+    else
+    {
+        return EXTERNO;
+    }
+    
+
 }
 
+
 bool digitoEnNumero(long n, short d) {
+    
 }
 
 enum Referencia dondeEstaElPuntoBis(struct Punto centroC, int rc, struct Punto p) {
