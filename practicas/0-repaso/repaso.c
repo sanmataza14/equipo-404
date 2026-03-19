@@ -36,7 +36,7 @@ enum Referencia dondeEstaElPunto(int xc, int yc, int rc, int xp, int yp) {
 
 
 bool digitoEnNumero(long n, short d) {
-    
+
 }
 
 enum Referencia dondeEstaElPuntoBis(struct Punto centroC, int rc, struct Punto p) {
