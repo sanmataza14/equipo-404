@@ -9,10 +9,9 @@
 int main() {
     imprimir_titulo("Tests de Ejercicio 1");
     //test 1: punto dentro de circunferencia
-    dondeEstaElPunto(0, 0, 2, 1, 1 ), INTERNO;
+    assert(dondeEstaElPunto(0, 0, 2, 1, 1 ) == INTERNO);
     //test 2; punto fuera circurferencia
-    dondeEstaElPunto(0, 0, 1, 1, 1 ), EXTERNO;
+    assert(dondeEstaElPunto(0, 0, 1, 1, 1 ) == EXTERNO);
     //test 3: punto sobre circunferencia
-    dondeEstaElPunto(0, 0, 1, 1, 0 ), EN_CIRCUNFERENCIA;
-    return 0;
+    assert(dondeEstaElPunto(0, 0, 1, 1, 0 ) == EN_CIRCUNFERENCIA);
 }
