@@ -1,3 +1,11 @@
-# template
+# 🧠 Trabajo Práctico - Programación en C
 
-Repositorio a tomar como punto de partida para las prácticas de los alumnos
+Repositorio del trabajo práctico realizado para la materia **[Estructura de Datos y Algoritmos 1]**.
+
+---
+
+## 👨‍💻 Integrantes del equipo
+
+- Simon Claudel
+- Mateo Luques
+- Santino Mataza
