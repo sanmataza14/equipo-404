@@ -92,25 +92,106 @@ float promedioDePartidosJugados(struct Jugador equipo[CANT_JUGADORES], int edad)
 }
 
 Vivienda viviendaConMasHabitantes(int edificio[CANT_PISOS][CANT_DEPARTAMENTOS]) {
+    int maxHabitantes = 0;
+    Vivienda vMax;
+    for (int i = 0; i < CANT_PISOS; i++)
+    {
+        for (int j = 0; j < CANT_DEPARTAMENTOS; j++)
+        {
+            if (edificio[i][j] > maxHabitantes)
+            {
+                maxHabitantes = edificio[i][j];
+                vMax.piso = i;
+                vMax.depto = 'A' + j;
+            }
+        }
+    }
+    return vMax;
 }
 
 // Función que devuelve el piso con más habitantes
 int pisoConMasHabitantes(int edificio[CANT_PISOS][CANT_DEPARTAMENTOS]) {
-}
+    int maxHabitantes = 0;
+    int pisoMaximo = 0;
+    for (int i = 0; i < CANT_PISOS; i++)
+    {
+        int sumaDepartamentos = 0;
+        for (int j = 0; j < CANT_DEPARTAMENTOS; j++)
+        {
+            sumaDepartamentos += edificio[i][j];
+        }
+        if (sumaDepartamentos > maxHabitantes)
+        {
+            maxHabitantes = sumaDepartamentos;
+            pisoMaximo = i;
+        }
+        
+    }
+     return pisoMaximo;
+} 
 
 // Función que devuelve el número de departamentos vacíos
 int cantidadDeViviendasVacias(int edificio[CANT_PISOS][CANT_DEPARTAMENTOS]) {
+    int cantCasasVacias = 0;
+    for (int i = 0; i < CANT_PISOS; i++)
+    {
+        for (int j = 0; j < CANT_DEPARTAMENTOS; j++)
+        {
+            if (edificio[i][j] == 0)
+            {
+                cantCasasVacias++;
+            }
+        }
+    }
+    return cantCasasVacias;
 }
 
 // Función que devuelve el promedio de habitantes por departamento
 float promedioHabitantesPorVivienda(int edificio[CANT_PISOS][CANT_DEPARTAMENTOS]) {
+    int sumaTotalHabitantes = 0;
+    int cantViviendas = 0;
+    for (int i = 0; i < CANT_PISOS; i++)
+    {
+        for (int j = 0; j < CANT_DEPARTAMENTOS; j++)
+        {
+            sumaTotalHabitantes += edificio[i][j];
+            cantViviendas++;
+        }
+    }
+    float promedio = (float)sumaTotalHabitantes / cantViviendas;
+    return promedio;
 }
 
 void cantidadDeViviendasVaciasPorPiso(int edificio[CANT_PISOS][CANT_DEPARTAMENTOS], int vaciasPorPiso[CANT_PISOS]) {
+    
+    for (int i = 0; i < CANT_PISOS; i++)
+    {
+        vaciasPorPiso[i] = 0;
+        for (int j = 0; j < CANT_DEPARTAMENTOS; j++)
+        {
+            if (edificio[i][j] == 0)
+            {
+            
+                vaciasPorPiso[i]++;
+            }  
+        }
+    }
 }
 
-void viviendasVacias(int edificio[CANT_PISOS][CANT_DEPARTAMENTOS],
-                     Vivienda viviendasVacias[CANT_PISOS * CANT_DEPARTAMENTOS]) {
+void viviendasVacias(int edificio[CANT_PISOS][CANT_DEPARTAMENTOS], Vivienda viviendasVacias[CANT_PISOS * CANT_DEPARTAMENTOS]) {
+    int contViviendasVacias = 0;
+    for (int i = 0; i < CANT_PISOS; i++)
+    {
+        for (int j = 0; j < CANT_DEPARTAMENTOS; j++)
+        {
+            if (edificio[i][j] == 0)
+            {
+                viviendasVacias[contViviendasVacias].piso = i;
+                viviendasVacias[contViviendasVacias].depto = 'A' + j;
+                contViviendasVacias++;
+            }  
+        }
+    }
 }
 
 void procesarArchivo(const char *nombreArchivo) {
