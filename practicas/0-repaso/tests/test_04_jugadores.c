@@ -21,6 +21,6 @@ int main() {
             {"Neuer",       35, 800},
             {"Davies",      20, 100}
     };
-
+    promedioDePartidosJugados(equipo, 35); // 725.0
     return 0;
 }

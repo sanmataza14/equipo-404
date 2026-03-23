@@ -9,5 +9,8 @@
 int main() {
     imprimir_titulo("Tests de Ejercicio 2");
 
+    assert(digitoEnNumero(987, 7) == true);
+    assert(digitoEnNumero(987, 6) == false);
+
     return 0;
 }
