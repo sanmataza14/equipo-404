@@ -195,4 +195,14 @@ void viviendasVacias(int edificio[CANT_PISOS][CANT_DEPARTAMENTOS], Vivienda vivi
 }
 
 void procesarArchivo(const char *nombreArchivo) {
+    FILE *archivo = fopen(nombreArchivo, "r");
+
+    if (archivo == NULL)
+    {
+        printf("\nError: No se pudo abrir el archivo %s\n", nombreArchivo);
+        return;
+    }
+    
+
+    fclose(archivo);
 }
