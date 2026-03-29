@@ -202,6 +202,15 @@ void procesarArchivo(const char *nombreArchivo) {
         printf("\nError: No se pudo abrir el archivo %s\n", nombreArchivo);
         return;
     }
+
+    int id, anio, mes, monto;
+    
+    while (fscanf(archivo, "%d %d %d %d", &id, &anio, &mes, &monto) == 4)
+    {
+        int indiceAnio = anio - ANIO_INICIO;
+
+        printf("Lei -> ID: %d | Anio: %d (Indice: %d) | Mes: %d | Monto: %d\n", id, anio, indiceAnio, mes, monto);
+    }
     
 
     fclose(archivo);
