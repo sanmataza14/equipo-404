@@ -22,6 +22,15 @@ bool esPalindromo(char *palabra) {
 }
 
 int productoRecursivo(int m, int n) {
+    if (n<0){
+        return productoRecursivo(-m, -n);
+    }
+    else if(n==0){
+        return 0;
+    }
+    else {
+        return m + productoRecursivo(m, n-1);
+    }
 }
 
 int terminoSerieDeFibonacci(int n) {
