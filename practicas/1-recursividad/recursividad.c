@@ -8,6 +8,17 @@ bool esCapicua(int numero) {
 }
 
 bool esPalindromo(char *palabra) {
+    int largo = strlen(palabra);
+    if (largo == 0 || largo == 1)
+    {
+        return true;
+    } else if (palabra[0] != palabra[largo - 1])
+    {
+        return false;
+    } else {
+        palabra[largo - 1] = '\0';
+        return esPalindromo(palabra + 1);
+    }
 }
 
 int productoRecursivo(int m, int n) {
