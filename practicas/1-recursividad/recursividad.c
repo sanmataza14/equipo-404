@@ -36,6 +36,21 @@ int productoRecursivo(int m, int n) {
 int terminoSerieDeFibonacci(int n) {
 }
 
+int restoRecursivo(int dividendo, int divisor){
+    if (dividendo < 0) {
+        return -restoRecursivo(-dividendo, divisor);
+    }
+    if (divisor < 0) {
+        return -restoRecursivo(dividendo, -divisor);
+    }
+
+    if (dividendo < divisor) {
+        return dividendo;
+    }
+
+    return restoRecursivo(dividendo - divisor, divisor);
+}
+
 bool esDivisiblePor7(int n) {
 }
 
