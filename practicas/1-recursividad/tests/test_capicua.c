@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "aserciones.h"
 #include "cadenas.h"
@@ -7,6 +8,8 @@
 
 int main() {
     imprimir_titulo("Tests para Capicua");
-
+    assert(esCapicua(161) == true);
+    assert(esCapicua(2992) == true);
+    assert(esCapicua(2993) == false);
     return 0;
 }
