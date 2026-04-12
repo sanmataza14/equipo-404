@@ -57,6 +57,15 @@ int productoRecursivo(int m, int n) {
 }
 
 int terminoSerieDeFibonacci(int n) {
+    if(n<1){
+    return 0;
+    }
+    if(n==1 || n==2){
+        return 1;
+    }
+    else {
+    return terminoSerieDeFibonacci(n - 1) + terminoSerieDeFibonacci(n - 2);
+}
 }
 
 int restoRecursivo(int dividendo, int divisor){
