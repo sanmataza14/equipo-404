@@ -101,6 +101,34 @@ void explosionRecursiva(int n, int b, int *result, int *size) {
 }
 
 int *explosion(int n, int b, int *size) {
+    if (n <= b){
+        int* unicopedazo = (int*) malloc(1* sizeof(int));
+        unicopedazo[0] = n;
+        *size = 1;
+
+        return unicopedazo;
+    }
+    int n1 = n / b;
+    int n2 = n - n1;
+    int size1, size2;
+
+    int* pedazos1 = explosion(n1, b, &size1);
+    int* pedazos2 = explosion(n2, b, &size2);
+
+    *size = size1 + size2;
+    int* resultado = (int*) malloc((*size) * sizeof(int));
+
+    for(int i=0; i < size1; i++){
+        resultado[i] = pedazos1[i];
+    }
+    for(int i=0; i < size2; i++){
+        resultado[size1 + i] = pedazos2[i];
+    }
+
+    free(pedazos1);
+    free(pedazos2);
+    
+    return resultado;
 }
 
 char *chinos(unsigned int nivel) {
