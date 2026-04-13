@@ -8,6 +8,7 @@
 
 int main() {
     imprimir_titulo("Tests para divisiblePor7");
-
+    assert(esDivisiblePor7(32291) == true);
+    assert(esDivisiblePor7(110) == false);
     return 0;
 }

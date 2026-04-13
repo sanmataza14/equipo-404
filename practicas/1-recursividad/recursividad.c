@@ -84,6 +84,17 @@ int restoRecursivo(int dividendo, int divisor){
 }
 
 bool esDivisiblePor7(int n) {
+    while (n >= 70){
+        int cifra = n % 10;
+        int resto = n / 10;
+        n = resto - (cifra * 2);
+    }
+    if(n % 7 == 0){
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 void explosionRecursiva(int n, int b, int *result, int *size) {
