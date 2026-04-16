@@ -9,5 +9,6 @@
 int main() {
     imprimir_titulo("Tests para la mafia china");
 
+    assert(strcmp(chinos(4), "(-.(-.(-.(-.-).-).-).-)") == 0);
     return 0;
 }

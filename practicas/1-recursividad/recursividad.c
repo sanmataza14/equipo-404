@@ -132,6 +132,21 @@ int *explosion(int n, int b, int *size) {
 }
 
 char *chinos(unsigned int nivel) {
+    unsigned int bytes_necesarios = 6 * nivel;
+    char* resultado = (char*)malloc(bytes_necesarios * sizeof(char));
+
+    if (nivel == 1) {
+        strcpy(resultado, "(-.-)");
+    } 
+    else {
+        char* interior = chinos(nivel - 1); 
+        
+        sprintf(resultado, "(-.%s.-)", interior); 
+        
+        free(interior); 
+    }
+
+    return resultado;
 }
 
 char *agregarSeparadoresRecursivo(char *numero, int indice, int contador) {
