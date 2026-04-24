@@ -1,0 +1,4 @@
+PUNTAJE: 0
+PASOS: 4
+MOVIMIENTOS: ADDB
+CAMINO: (2,1) -> (1,1) -> (1,2) -> (1,3) -> (2,3)

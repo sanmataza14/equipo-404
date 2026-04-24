@@ -1,0 +1,4 @@
+PUNTAJE: 5
+PASOS: 2
+MOVIMIENTOS: DD
+CAMINO: (1,1) -> (1,2) -> (1,3)

@@ -1,6 +1,11 @@
 project(Recursividad)
 
 enable_testing()
+file(GLOB DATA_FILES "archivos/*.txt")
+foreach (DATA_FILE ${DATA_FILES})
+    get_filename_component(FILE_NAME ${DATA_FILE} NAME)
+    configure_file(${DATA_FILE} archivos/${FILE_NAME} COPYONLY)
+endforeach ()
 
 add_library(recursividad recursividad.c)
 
