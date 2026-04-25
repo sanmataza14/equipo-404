@@ -1,6 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
+#include "../recursividad.h"
 
 bool file_eq(const char *archivo_esperado, const char *archivo_generado) {
     FILE *esperado = fopen(archivo_esperado, "r");
@@ -21,6 +23,8 @@ bool file_eq(const char *archivo_esperado, const char *archivo_generado) {
             son_iguales = false;
             break;
         }
+        linea_esperada[strcspn(linea_esperada, "\r\n")] = 0;
+        linea_generada[strcspn(linea_generada, "\r\n")] = 0;
 
         if (strcmp(linea_esperada, linea_generada) != 0) {
             son_iguales = false;
