@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.10)
 project(Recursividad)
 
 enable_testing()
@@ -17,7 +18,9 @@ foreach (TEST_SOURCE ${TEST_SOURCES})
     get_filename_component(TEST_NAME ${TEST_SOURCE} NAME_WE)
 
     # Agregar un ejecutable para cada archivo de prueba encontrado
-    add_executable(${TEST_NAME} ${TEST_SOURCE})
-    target_link_libraries(${TEST_NAME} recursividad aserciones cadenas m)
+    include_directories("../../utilidades")
+    link_directories("../../utilidades")
+    add_executable(${TEST_NAME} ${TEST_SOURCE} "../../utilidades/aserciones.c" "../../utilidades/cadenas.c")
+    target_link_libraries(${TEST_NAME} recursividad m)
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
 endforeach ()
