@@ -1,6 +1,7 @@
 #include "../practica_listas.h"
 
 #include "cadenas.h"
+#include <stdio.h>
 
 void mostrarLista(Lista l) {
     Iterador it = iterador(l);

@@ -1,5 +1,5 @@
 #include "../practica_listas.h"
-
+#include <stdio.h>
 #include "cadenas.h"
 
 int main() {
