@@ -93,22 +93,31 @@ Lista multiplos(Lista l, int n) {
 }
 
 Lista invertirListaRec(Iterador iter) {
-    
-    if (!hay_siguiente(iter)) {
+    if (iter == NULL || !hay_siguiente(iter)) {
         return l_crear();
     }
 
     TipoElemento te = siguiente(iter);
-    Lista lista_invertida = invertirListaRec(iter);
-    l_agregar(lista_invertida, te);
-
-    return lista_invertida;
+    Lista nueva = invertirListaRec(iter);
+    l_agregar(nueva, te);
+    
+    return nueva;
 }
 
 Lista invertirLista(Lista l) {
-    
+    Lista nueva = l_crear();
+
+    if (l == NULL || l_es_vacia(l)) {
+        return nueva;
+    }
+
     Iterador iter = iterador(l);
-    return invertirListaRec(iter);
+    while (hay_siguiente(iter)) {
+        TipoElemento te = siguiente(iter);
+        l_insertar(nueva, te, 1);
+    }
+    
+    return nueva;
 }
 
 enum Comparacion compararListas(Lista l1, Lista l2) {

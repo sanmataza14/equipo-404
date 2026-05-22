@@ -23,18 +23,34 @@ struct IteradorRep {
 //-----------------------------------------------------------------------------------------------------------
 
 Lista l_crear() {
+    Lista nueva = (Lista) malloc(sizeof(struct ListaRep));
+    
+    nueva->valores = calloc(TAMANIO_MAXIMO, sizeof(TipoElemento));
+    
+    nueva->cantidad = 0;
+    return nueva;
 }
 
 bool l_es_vacia(Lista lista) {
+    if (lista == NULL) return true;
+    return lista->cantidad == 0;
 }
 
 bool l_es_llena(Lista lista) {
+    if (lista == NULL) return true;
+    return lista->cantidad >= TAMANIO_MAXIMO;
 }
 
 int l_longitud(Lista lista) {
 }
 
 bool l_agregar(Lista lista, TipoElemento elemento) {
+    if (l_es_llena(lista)) return false;
+
+    lista->valores[lista->cantidad] = elemento;
+    lista->cantidad++;
+    
+    return true;
 }
 
 bool l_borrar(Lista lista, int clave) {
@@ -44,6 +60,18 @@ TipoElemento l_buscar(Lista lista, int clave) {
 }
 
 bool l_insertar(Lista lista, TipoElemento elemento, int pos) {
+    if (l_es_llena(lista) || pos < 1 || pos > lista->cantidad + 1) return false;
+
+    int indice = pos - 1;
+
+    for (int i = lista->cantidad; i > indice; i--) {
+        lista->valores[i] = lista->valores[i - 1];
+    }
+
+    lista->valores[indice] = elemento;
+    lista->cantidad++;
+    
+    return true;
 }
 
 bool l_eliminar(Lista lista, int pos) {
@@ -77,10 +105,23 @@ char *l_to_string(Lista lista) {
 //-----------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------
 Iterador iterador(Lista lista) {
+    Iterador it = (Iterador) malloc(sizeof(struct IteradorRep));
+    it->lista = lista;
+    it->posicionActual = 0;
+    return it;
 }
 
 bool hay_siguiente(Iterador iterador) {
+    if (iterador == NULL || iterador->lista == NULL) return false;
+    return iterador->posicionActual < iterador->lista->cantidad;
 }
 
 TipoElemento siguiente(Iterador iterador) {
+    if (iterador == NULL || !hay_siguiente(iterador)) return NULL;
+    
+    TipoElemento actual = iterador->lista->valores[iterador->posicionActual];
+    
+    iterador->posicionActual++;
+    
+    return actual;
 }
