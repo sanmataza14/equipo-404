@@ -8,6 +8,16 @@
 #include "listas/listas.h"
 
 // --- FUNCIONES AUXILIARES ---
+
+void promedioRecAux(Iterador iter, double *suma, int *contador) {
+    if (!hay_siguiente(iter)) {
+        return;
+    }
+    *suma += siguiente(iter)->clave;
+    *contador += 1;
+    promedioRecAux(iter, suma, contador);
+}
+
 int compararRec(Iterador i1, Iterador i2) {
     if (!hay_siguiente(i1) || !hay_siguiente(i2)) {
         return 0;
@@ -61,11 +71,7 @@ double promedio(Lista l) {
     double suma = 0;
     int contador = 0;
     Iterador iter = iterador(l);
-    while (hay_siguiente(iter)) {
-        TipoElemento te = siguiente(iter);
-        suma += te->clave; 
-        contador++;
-    }
+    promedioRecAux(iter, &suma, &contador);
     return suma / contador;
 }
 
