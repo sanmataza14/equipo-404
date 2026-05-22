@@ -174,6 +174,29 @@ bool listaEsMultiplo(Lista l1, Lista l2) {
     return listaEsMultiploRec(i1, i2, escalar);
 }
 
-double evaluar(struct Polinomio p, double x) { return 0.0; }
+double evaluar(struct Polinomio p, double x) {
+    if (l_es_vacia(p.coeficientes)) return 0.0;
 
-Lista valores(struct Polinomio p, int desde, int hasta, double paso) { return l_crear(); }
+    Iterador i1 = iterador(p.coeficientes);
+    double resultado = 0.0;
+    int grado = 0;
+
+    while(hay_siguiente(i1)){
+    TipoElemento te = siguiente(i1);
+    resultado += te->clave * pow(x, grado);
+    grado ++;
+    }
+    return resultado; 
+    }
+
+Lista valores(struct Polinomio p, int desde, int hasta, double paso) {
+    Lista nueva = l_crear();
+    int x = desde;
+    while (x <= hasta){
+        double res = evaluar(p, x);
+        TipoElemento nuevo_te = te_crear((int)res);
+        l_agregar(nueva, nuevo_te);
+        x += paso;
+    }
+    return nueva; 
+}
