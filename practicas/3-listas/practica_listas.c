@@ -18,7 +18,6 @@ struct ElementoYPosicion menorYPosicionRec(Iterador iter, struct ElementoYPosici
     return menorYPosicionRec(iter, min_actual, pos_actual + 1);
 }
 
-
 Lista invertirListaRec(Iterador iter) {
     if (!hay_siguiente(iter)) {
         return l_crear();
@@ -29,6 +28,20 @@ Lista invertirListaRec(Iterador iter) {
     return lista_invertida;
 }
 
+
+Lista multiplos(Lista l, int n) {
+    Lista resultado = l_crear();
+    if (l_es_vacia(l) || n == 0) return resultado;
+    
+    Iterador iter = iterador(l);
+    while (hay_siguiente(iter)) {
+        TipoElemento te = siguiente(iter);
+        TipoElemento nuevo_te = te_crear(te->clave * n);
+        l_agregar(resultado, nuevo_te);
+    }
+    
+    return resultado;
+}
 
 double promedio(Lista l) {
     if (l_es_vacia(l)) {
@@ -57,12 +70,12 @@ struct ElementoYPosicion menorYPosicion(Lista l) {
 }
 
 Lista invertirLista(Lista l) {
+    Lista nueva = l_crear();
     Iterador iter = iterador(l);
     while (hay_siguiente(iter)) {
         TipoElemento te = siguiente(iter);
         l_insertar(nueva, te, 1);
     }
-    
     return nueva;
 }
 

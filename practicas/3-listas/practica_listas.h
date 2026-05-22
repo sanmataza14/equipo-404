@@ -3,8 +3,9 @@
 
 #include "listas/listas.h"
 
-// Operaciones varias
+
 Lista invertirLista(Lista l);
+Lista invertirListaRec(Iterador iter);
 
 struct ElementoYPosicion {
     int valor;
