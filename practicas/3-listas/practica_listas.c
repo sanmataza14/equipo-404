@@ -151,6 +151,59 @@ enum Comparacion compararListas(Lista l1, Lista l2) {
     }
 }
 
+struct ElementoYOcurrencias mayorYOcurrencias(Lista l) {
+    struct ElementoYOcurrencias maximo = {0, 0};
+    
+    if (l == NULL || l_es_vacia(l)) {
+        return maximo;
+    }
+
+    Iterador it = iterador(l);
+    if (hay_siguiente(it)) {
+        TipoElemento te = siguiente(it);
+        maximo.valor = te->clave;
+        maximo.ocurrencias = 1;
+    }
+
+    while (hay_siguiente(it)) {
+        TipoElemento te = siguiente(it);
+        
+        if (te->clave > maximo.valor) {
+            maximo.valor = te->clave;
+            maximo.ocurrencias = 1;
+        } else if (te->clave == maximo.valor) {
+            maximo.ocurrencias++;
+        }
+    }
+
+    return maximo;
+}
+
+Lista reflejarLista(Lista l, bool ultimoDoble) {
+    Lista nueva = l_crear();
+    
+    if (l == NULL || l_es_vacia(l)) {
+        return nueva;
+    }
+
+    Iterador it_orig = iterador(l);
+    while (hay_siguiente(it_orig)) {
+        l_agregar(nueva, siguiente(it_orig));
+    }
+
+    Lista invertida = invertirLista(l);
+    Iterador it_inv = iterador(invertida);
+
+    if (!ultimoDoble && hay_siguiente(it_inv)) {
+        siguiente(it_inv); 
+    }
+
+    while (hay_siguiente(it_inv)) {
+        l_agregar(nueva, siguiente(it_inv));
+    }
+
+    return nueva;
+}
 
 double evaluar(struct Polinomio p, double x) {
 }
