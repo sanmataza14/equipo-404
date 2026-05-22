@@ -58,7 +58,12 @@ struct ElementoYPosicion menorYPosicion(Lista l) {
 
 Lista invertirLista(Lista l) {
     Iterador iter = iterador(l);
-    return invertirListaRec(iter);
+    while (hay_siguiente(iter)) {
+        TipoElemento te = siguiente(iter);
+        l_insertar(nueva, te, 1);
+    }
+    
+    return nueva;
 }
 
 enum Comparacion compararListas(Lista l1, Lista l2) {

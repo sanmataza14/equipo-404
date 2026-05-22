@@ -26,18 +26,43 @@ struct IteradorRep {
 //-----------------------------------------------------------------------------------------------
 
 Lista l_crear() {
+    Lista nueva = (Lista) malloc(sizeof(struct ListaRep));
+    nueva->inicio = NULL;
+    nueva->cantidad = 0;
+    return nueva;
 }
 
 bool l_es_vacia(Lista lista) {
+    if (lista == NULL) return true;
+    return lista->cantidad == 0;
 }
 
 bool l_es_llena(Lista lista) {
+    return lista->cantidad == TAMANIO_MAXIMO;
 }
 
 int l_longitud(Lista lista) {
 }
 
 bool l_agregar(Lista lista, TipoElemento elemento) {
+    if (l_es_llena(lista)) return false;
+
+    struct Nodo *nuevo = (struct Nodo *) malloc(sizeof(struct Nodo));
+    nuevo->datos = elemento;
+    nuevo->siguiente = NULL;
+
+    if (lista->inicio == NULL) {
+        lista->inicio = nuevo;
+    } else {
+        struct Nodo *aux = lista->inicio;
+        while (aux->siguiente != NULL) {
+            aux = aux->siguiente;
+        }
+        aux->siguiente = nuevo;
+    }
+    
+    lista->cantidad++;
+    return true;
 }
 
 bool l_borrar(Lista lista, int clave) {
@@ -47,6 +72,25 @@ TipoElemento l_buscar(Lista lista, int clave) {
 }
 
 bool l_insertar(Lista lista, TipoElemento elemento, int pos) {
+    if (l_es_llena(lista) || pos < 1 || pos > lista->cantidad + 1) return false;
+
+    struct Nodo *nuevo = (struct Nodo *) malloc(sizeof(struct Nodo));
+    nuevo->datos = elemento;
+
+    if (pos == 1) {
+        nuevo->siguiente = lista->inicio;
+        lista->inicio = nuevo;
+    } else {
+        struct Nodo *aux = lista->inicio;
+        for (int i = 1; i < pos - 1; i++) {
+            aux = aux->siguiente;
+        }
+        nuevo->siguiente = aux->siguiente;
+        aux->siguiente = nuevo;
+    }
+    
+    lista->cantidad++;
+    return true;
 }
 
 bool l_eliminar(Lista lista, int pos) {
@@ -84,10 +128,25 @@ char *l_to_string(Lista lista) {
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 Iterador iterador(Lista lista) {
+    Iterador it = (Iterador) malloc(sizeof(struct IteradorRep));
+    if (lista != NULL) {
+        it->posicionActual = lista->inicio;
+    } else {
+        it->posicionActual = NULL;
+    }
+    return it;
 }
 
 bool hay_siguiente(Iterador iterador) {
+    if (iterador == NULL) return false;
+    return iterador->posicionActual != NULL;
 }
 
 TipoElemento siguiente(Iterador iterador) {
+    if (iterador == NULL || iterador->posicionActual == NULL) return NULL;
+
+    TipoElemento actual = iterador->posicionActual->datos;
+    iterador->posicionActual = iterador->posicionActual->siguiente;
+    
+    return actual;
 }
