@@ -10,7 +10,7 @@ bool buscarElemento(Pila p, TipoElemento e) {
     bool encontrado = false;
     Pila aux = p_crear();
     
-    // Revisamos la pila sin destruirla
+   
     while (!p_es_vacia(p)) {
         TipoElemento actual = p_desapilar(p);
         if (actual->clave == e->clave) {
@@ -19,7 +19,7 @@ bool buscarElemento(Pila p, TipoElemento e) {
         p_apilar(aux, actual);
     }
     
-    // Restauramos la pila original
+    
     while (!p_es_vacia(aux)) {
         p_apilar(p, p_desapilar(aux));
     }
@@ -31,24 +31,24 @@ Pila elementosEnComun(Pila p1, Pila p2) {
     Pila comunes = p_crear();
     Pila aux1 = p_crear();
 
-    // Invertimos p1 en aux1 para poder procesarla desde el fondo hacia el tope
+    
     while (!p_es_vacia(p1)) {
         p_apilar(aux1, p_desapilar(p1));
     }
 
-    // Volvemos a armar p1 mientras revisamos si hay coincidencias en p2
+    
     while (!p_es_vacia(aux1)) {
         TipoElemento actual = p_desapilar(aux1);
         
-        // Usamos nuestra función buscar para ver si está en p2
+        
         if (buscarElemento(p2, actual)) {
-            // Evitamos meter repetidos en la pila de comunes
+            
             if (!buscarElemento(comunes, actual)) {
                 p_apilar(comunes, te_crear(actual->clave));
             }
         }
         
-        // Restauramos p1 a su estado original
+        
         p_apilar(p1, actual);
     }
 
@@ -56,22 +56,22 @@ Pila elementosEnComun(Pila p1, Pila p2) {
 }
 
 void elementosEnComunRec_aux(Pila p1, Pila p2, Pila comunes) {
-    // Caso base: llegamos al fondo de p1
+    
     if (p_es_vacia(p1)) return;
     
     TipoElemento tope = p_desapilar(p1);
     
-    // Bajamos hasta el fondo
+    
     elementosEnComunRec_aux(p1, p2, comunes);
     
-    // Al volver subiendo, verificamos y apilamos
+   
     if (buscarElemento(p2, tope)) {
         if (!buscarElemento(comunes, tope)) {
             p_apilar(comunes, te_crear(tope->clave));
         }
     }
     
-    // Restauramos p1
+    
     p_apilar(p1, tope);
 }
 
@@ -258,5 +258,44 @@ Pila eliminarTodasOcurrencias(Pila p, int clave) {
 }
 
 Pila eliminarRepetidos(Pila p) {
-    return NULL;
+    Pila resultado = p_crear();
+    if (p == NULL || p_es_vacia(p)) {
+        return resultado;
+    }
+
+    Pila aux_p = p_crear();
+
+    while (!p_es_vacia(p)) {
+        TipoElemento actual = p_desapilar(p);
+        p_apilar(aux_p, actual);
+
+        Pila aux_res = p_crear();
+        bool encontrado = false;
+
+        while (!p_es_vacia(resultado)) {
+            TipoElemento te_res = p_desapilar(resultado);
+            if (te_res->clave == actual->clave) {
+                int cantidad_actual = (int)(long)te_res->valor;
+                te_res->valor = (void*)(long)(cantidad_actual + 1);
+                encontrado = true;
+            }
+            p_apilar(aux_res, te_res);
+        }
+
+        while (!p_es_vacia(aux_res)) {
+            p_apilar(resultado, p_desapilar(aux_res));
+        }
+
+        if (!encontrado) {
+            TipoElemento nuevo = te_crear(actual->clave);
+            nuevo->valor = (void*)(long)1; 
+            p_apilar(resultado, nuevo);
+        }
+    }
+
+    while (!p_es_vacia(aux_p)) {
+        p_apilar(p, p_desapilar(aux_p));
+    }
+
+    return resultado;
 }
