@@ -254,7 +254,29 @@ int contarElementos(Pila p) {
 }
 
 bool compararPilas(Pila p1, Pila p2) {
-    return false;
+    if (contarElementos(p1) != contarElementos(p2)) return false;
+
+    Pila aux = p_crear();
+    bool iguales = true;
+    
+    while(!p_es_vacia(p1)){
+    TipoElemento e1 = p_desapilar(p1);
+    TipoElemento e2 = p_desapilar(p2);
+    
+    if (e1->clave != e2->clave) {
+        iguales = false;
+    }
+    p_apilar(aux, e1);
+    p_apilar(aux, e2);
+    }
+    while (!p_es_vacia(aux)){
+        TipoElemento e2 = p_desapilar(aux);
+        TipoElemento e1 = p_desapilar(aux);
+
+        p_apilar(p2, e2);
+        p_apilar(p1, e1);
+    }
+    return iguales;
 }
 
 char *cambioDeBase(int numero, int base) {
