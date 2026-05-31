@@ -10,7 +10,6 @@ bool buscarElemento(Pila p, TipoElemento e) {
     bool encontrado = false;
     Pila aux = p_crear();
     
-   
     while (!p_es_vacia(p)) {
         TipoElemento actual = p_desapilar(p);
         if (actual->clave == e->clave) {
@@ -19,11 +18,9 @@ bool buscarElemento(Pila p, TipoElemento e) {
         p_apilar(aux, actual);
     }
     
-    
     while (!p_es_vacia(aux)) {
         p_apilar(p, p_desapilar(aux));
     }
-    
     return encontrado;
 }
 
@@ -31,27 +28,21 @@ Pila elementosEnComun(Pila p1, Pila p2) {
     Pila comunes = p_crear();
     Pila aux1 = p_crear();
 
-    
     while (!p_es_vacia(p1)) {
         p_apilar(aux1, p_desapilar(p1));
     }
 
-    
     while (!p_es_vacia(aux1)) {
         TipoElemento actual = p_desapilar(aux1);
-        
-        
+         
         if (buscarElemento(p2, actual)) {
             
             if (!buscarElemento(comunes, actual)) {
                 p_apilar(comunes, te_crear(actual->clave));
             }
         }
-        
-        
         p_apilar(p1, actual);
     }
-
     return comunes;
 }
 
@@ -61,17 +52,13 @@ void elementosEnComunRec_aux(Pila p1, Pila p2, Pila comunes) {
     
     TipoElemento tope = p_desapilar(p1);
     
-    
     elementosEnComunRec_aux(p1, p2, comunes);
     
-   
     if (buscarElemento(p2, tope)) {
         if (!buscarElemento(comunes, tope)) {
             p_apilar(comunes, te_crear(tope->clave));
         }
     }
-    
-    
     p_apilar(p1, tope);
 }
 
@@ -87,21 +74,17 @@ void insertarElemento(Pila p, TipoElemento e, int pos) {
     Pila auxiliar = p_crear();
     int actual = 1;
 
-    
     while (actual < pos && !p_es_vacia(p)) {
         p_apilar(auxiliar, p_desapilar(p));
         actual++;
     }
 
-    
     p_apilar(p, e);
 
-   
     while (!p_es_vacia(auxiliar)) {
         p_apilar(p, p_desapilar(auxiliar));
     }
 }
-
 
 
 void insertarElementoRec_aux(Pila p, TipoElemento e, int pos) {
@@ -111,12 +94,9 @@ void insertarElementoRec_aux(Pila p, TipoElemento e, int pos) {
         return;
     }
     
-    
     TipoElemento tope = p_desapilar(p);
     
-    
     insertarElementoRec_aux(p, e, pos - 1);
-    
     
     p_apilar(p, tope);
 }
@@ -151,8 +131,84 @@ void eliminarElemento(Pila p, int clave) {
     }
 }
 
+
 void intercambiarElementos(Pila p, int pos1, int pos2) {
+    if(p == NULL || p_es_vacia(p)) return;
+    int cant = contarElementos(p);
+    if (pos1 < 1 || pos1 > cant || pos2 < 1 || pos2 > cant) return;
+    Pila aux = p_crear();
+    int contador = 1;
+    TipoElemento te1 = NULL;
+    TipoElemento te2 = NULL;
+
+    while (!p_es_vacia(p)) {
+    TipoElemento actual = p_desapilar(p);
+
+    if (contador == pos1) {
+        te1 = actual;
+        p_apilar(aux, actual);
+    } else if (contador == pos2) {
+        te2 = actual;
+        p_apilar(aux, actual);
+    } else {
+        p_apilar(aux, actual);
+    }
+    contador++;
+}
+int cont_vuelta = 1;
+
+while (!p_es_vacia(aux)) {
+    if (cont_vuelta == pos1) {
+        p_apilar(p, te2);
+        p_desapilar(aux);
+        cont_vuelta++;
+    } 
+    else if (cont_vuelta == pos2) {
+        p_apilar(p, te1);
+        p_desapilar(aux);
+        cont_vuelta++; 
+    }
+    else {
+    TipoElemento temp = p_desapilar(aux);
+    p_apilar(p, temp);
+    cont_vuelta++;
+    }
+}
     return;
+}
+
+void intercambiarAux(Pila p, int pos1, int pos2, int actual, TipoElemento *te1, TipoElemento *te2) {
+    if (p_es_vacia(p)) return;
+    TipoElemento elem = p_desapilar(p);
+
+    if (actual == pos1) {
+        *te1 = elem;
+    } else if (actual == pos2) {
+        *te2 = elem;
+    }
+
+    intercambiarAux(p, pos1, pos2, actual + 1, te1, te2);
+
+    if (actual == pos1) {
+        p_apilar(p, *te2);
+    } else if (actual == pos2) {
+        p_apilar(p, *te1);
+    } else {
+        p_apilar(p, elem);
+    }
+}
+
+void intercambiarElementosRec(Pila p, int pos1, int pos2) {
+    if (p == NULL || p_es_vacia(p)) return;
+    if (pos1 == pos2) return; 
+    int cant = contarElementos(p);
+    
+    if (pos1 < 1 || pos1 > cant || pos2 < 1 || pos2 > cant) return;
+
+    TipoElemento te1 = NULL;
+    TipoElemento te2 = NULL;
+
+    intercambiarAux(p, pos1, pos2, 1, &te1, &te2);
 }
 
 Pila copiar(Pila p) {
@@ -178,12 +234,9 @@ void copiarRec_aux(Pila original, Pila copia) {
         return; 
     }
     
-    
     TipoElemento tope = p_desapilar(original);
     
-    
     copiarRec_aux(original, copia);
-    
     
     p_apilar(original, tope); 
     p_apilar(copia, te_crear(tope->clave)); 
@@ -214,14 +267,12 @@ char *cambioDeBase(int numero, int base) {
 
     Pila p = p_crear();
     int aux = numero;
-
     
     while (aux > 0) {
         int resto = aux % base;
         p_apilar(p, te_crear(resto));
         aux = aux / base;
     }
-
     
     char *resultado = (char *)malloc(33 * sizeof(char)); 
     int i = 0;
@@ -240,7 +291,6 @@ char *cambioDeBase(int numero, int base) {
         }
         i++;
     }
-    
     
     resultado[i] = '\0';
 
