@@ -250,7 +250,20 @@ Pila copiarRecursivo(Pila p) {
 }
 
 int contarElementos(Pila p) {
-    return 0;
+    if (p == NULL || p_es_vacia(p)) {
+        return 0;
+    }
+    Pila aux = p_crear();
+    int contador = 0;
+
+    while (!p_es_vacia(p)) {
+        p_apilar(aux, p_desapilar(p));
+        contador++;
+    }
+    while (!p_es_vacia(aux)) {
+        p_apilar(p, p_desapilar(aux));
+    }
+    return contador;
 }
 
 bool compararPilas(Pila p1, Pila p2) {
@@ -327,25 +340,29 @@ Pila invertirPila(Pila p) {
 
 Pila eliminarTodasOcurrencias(Pila p, int clave) {
     Pila modif = p_crear();
-    Pila aux = p_crear();
-    if(p_es_vacia(p) || p == NULL)return modif;
-
-    while(!p_es_vacia(p)){
+    Pila aux_guardar = p_crear();
+    Pila aux_filtrados = p_crear();
+    
+    if (p == NULL || p_es_vacia(p)) {
+        return modif;
+    }
+    while (!p_es_vacia(p)) {
         TipoElemento actual = p_desapilar(p);
-        p_apilar(modif, actual);
+        
+        p_apilar(aux_guardar, actual); 
 
-        if(actual->clave != clave){
-            p_apilar(aux, actual);
+        if (actual->clave != clave) {
+            TipoElemento clon = te_crear(actual->clave); 
+            p_apilar(aux_filtrados, clon);
         }
     }
-    while(!p_es_vacia(modif)){
-        TipoElemento actual = p_desapilar(modif);
-        p_apilar(p, actual);
-    }
-    while(!p_es_vacia(aux)){
-        TipoElemento actual = p_desapilar(aux);
-        p_apilar(modif, actual);
 
+    while (!p_es_vacia(aux_guardar)) {
+        p_apilar(p, p_desapilar(aux_guardar));
+    }
+
+    while (!p_es_vacia(aux_filtrados)) {
+        p_apilar(modif, p_desapilar(aux_filtrados));
     }
     return modif;
 }

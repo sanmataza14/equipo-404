@@ -1,4 +1,5 @@
 #include "../practica_pilas.h"
+#include <stdio.h>
 
 #include "cadenas.h"
 

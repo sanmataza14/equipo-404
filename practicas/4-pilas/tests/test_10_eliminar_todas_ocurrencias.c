@@ -1,4 +1,5 @@
 #include "../practica_pilas.h"
+#include <assert.h>
 
 #include "cadenas.h"
 
@@ -18,18 +19,27 @@ int main() {
     assert(!p_es_vacia(resultado));
     assert(contarElementos(resultado) == 5);
 
-    TipoElemento te;
-    te = p_desapilar(resultado); 
-    assert(te->clave == 8);
-    te = p_desapilar(resultado); 
-    assert(te->clave == 4);
-    te = p_desapilar(resultado); 
-    assert(te->clave == 7);
-    te = p_desapilar(resultado); 
-    assert(te->clave == 6);
-    te = p_desapilar(resultado); 
-    assert(te->clave == 1);
+    Pila espejo_test = p_crear();
+    Pila aux_test = p_crear();
     
-    assert(p_es_vacia(resultado) == true);
+    while (!p_es_vacia(resultado)) {
+        TipoElemento actual = p_desapilar(resultado);
+        p_apilar(aux_test, actual);
+    }
+    while (!p_es_vacia(aux_test)) {
+        TipoElemento actual = p_desapilar(aux_test);
+        p_apilar(resultado, actual);
+        p_apilar(espejo_test, actual);
+    }
+    
+    TipoElemento te;
+    te = p_desapilar(espejo_test); assert(te->clave == 8);
+    te = p_desapilar(espejo_test); assert(te->clave == 4);
+    te = p_desapilar(espejo_test); assert(te->clave == 7);
+    te = p_desapilar(espejo_test); assert(te->clave == 6);
+    te = p_desapilar(espejo_test); assert(te->clave == 1);
+    
+    assert(p_es_vacia(espejo_test) == true);
+
     return 0;
 }
