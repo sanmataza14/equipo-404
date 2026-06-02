@@ -326,7 +326,51 @@ Pila invertirPila(Pila p) {
 }
 
 Pila eliminarTodasOcurrencias(Pila p, int clave) {
-    return NULL;
+    Pila modif = p_crear();
+    Pila aux = p_crear();
+    if(p_es_vacia(p) || p == NULL)return modif;
+
+    while(!p_es_vacia(p)){
+        TipoElemento actual = p_desapilar(p);
+        p_apilar(modif, actual);
+
+        if(actual->clave != clave){
+            p_apilar(aux, actual);
+        }
+    }
+    while(!p_es_vacia(modif)){
+        TipoElemento actual = p_desapilar(modif);
+        p_apilar(p, actual);
+    }
+    while(!p_es_vacia(aux)){
+        TipoElemento actual = p_desapilar(aux);
+        p_apilar(modif, actual);
+
+    }
+    return modif;
+}
+
+void eliminarOcurrenciasAux(Pila p, int clave, Pila modif) {
+    if (p_es_vacia(p)) {
+        return;
+    }
+    TipoElemento actual = p_desapilar(p);
+    eliminarOcurrenciasAux(p, clave, modif);
+    p_apilar(p, actual);
+
+    if (actual->clave != clave) {
+        p_apilar(modif, actual);
+    }
+}
+
+Pila eliminarTodasOcurrenciasRec(Pila p, int clave) {
+    Pila modif = p_crear();
+
+    if (p == NULL || p_es_vacia(p)) {
+        return modif;
+    }
+    eliminarOcurrenciasAux(p, clave, modif);
+    return modif;
 }
 
 Pila eliminarRepetidos(Pila p) {
