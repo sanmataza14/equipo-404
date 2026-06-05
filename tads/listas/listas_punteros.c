@@ -42,6 +42,8 @@ bool l_es_llena(Lista lista) {
 }
 
 int l_longitud(Lista lista) {
+    if (lista == NULL) return 0;
+    return lista->cantidad;
 }
 
 bool l_agregar(Lista lista, TipoElemento elemento) {
@@ -66,9 +68,41 @@ bool l_agregar(Lista lista, TipoElemento elemento) {
 }
 
 bool l_borrar(Lista lista, int clave) {
+    if (lista == NULL || l_es_vacia(lista)) return false;
+    
+    struct Nodo *actual = lista->inicio;
+    struct Nodo *anterior = NULL;
+
+    while (actual != NULL && actual->datos->clave != clave) {
+        anterior = actual;
+        actual = actual->siguiente;
+    }
+
+    if (actual == NULL) return false;
+    
+    if (anterior == NULL) {
+        lista->inicio = actual->siguiente;
+    } else {
+        anterior->siguiente = actual->siguiente;
+    }
+
+    free(actual);
+    lista->cantidad--;
+    return true;
 }
 
 TipoElemento l_buscar(Lista lista, int clave) {
+    if (lista == NULL) return NULL;
+
+    struct Nodo *actual = lista->inicio;
+
+    while (actual != NULL) {
+        if (actual->datos->clave == clave) {
+            return actual->datos; // Encontramos la clave
+        }
+        actual = actual->siguiente;
+    }
+    return NULL;
 }
 
 bool l_insertar(Lista lista, TipoElemento elemento, int pos) {
@@ -94,9 +128,34 @@ bool l_insertar(Lista lista, TipoElemento elemento, int pos) {
 }
 
 bool l_eliminar(Lista lista, int pos) {
+    if (lista == NULL || l_es_vacia(lista) || pos < 1 || pos > lista->cantidad) return false;
+    
+    struct Nodo *actual = lista->inicio;
+    struct Nodo *anterior = NULL;
+
+    for (int i = 1; i < pos; i++) {
+        anterior = actual;
+        actual = actual->siguiente;
+    }
+
+    if (anterior == NULL) {
+        lista->inicio = actual->siguiente;
+
+    } else anterior->siguiente = actual->siguiente;
+    
+    free(actual);
+    lista->cantidad--;
+    return true;
 }
 
 TipoElemento l_recuperar(Lista lista, int pos) {
+    if (lista == NULL || l_es_vacia(lista) || pos < 1 || pos > lista->cantidad) return NULL;
+    struct Nodo *actual = lista->inicio;
+
+    for (int i = 1; i < pos; i++) {
+        actual = actual->siguiente;
+    }
+    return actual->datos;
 }
 
 void l_mostrar(Lista lista) {

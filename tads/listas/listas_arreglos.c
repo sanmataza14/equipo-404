@@ -42,6 +42,8 @@ bool l_es_llena(Lista lista) {
 }
 
 int l_longitud(Lista lista) {
+    if (lista == NULL) return 0;
+    return lista->cantidad;
 }
 
 bool l_agregar(Lista lista, TipoElemento elemento) {
@@ -54,9 +56,29 @@ bool l_agregar(Lista lista, TipoElemento elemento) {
 }
 
 bool l_borrar(Lista lista, int clave) {
+    if (lista == NULL) return false;
+    
+
+    for (int i = 0; i < lista->cantidad; i++) {
+        if (lista->valores[i]->clave == clave) {
+            for (int j = i; j < lista->cantidad - 1; j++) {
+                lista->valores[j] = lista->valores[j + 1];
+            }
+            lista->cantidad--;
+            return true;
+        }
+    }
+    return false;
 }
 
 TipoElemento l_buscar(Lista lista, int clave) {
+    if (lista == NULL) return NULL;
+    for (int i = 0; i < lista->cantidad; i++) {
+        if (lista->valores[i]->clave == clave) {
+            return lista->valores[i];
+        }
+    }
+    return NULL;
 }
 
 bool l_insertar(Lista lista, TipoElemento elemento, int pos) {
@@ -75,9 +97,23 @@ bool l_insertar(Lista lista, TipoElemento elemento, int pos) {
 }
 
 bool l_eliminar(Lista lista, int pos) {
+    if (lista == NULL) return false;
+    if (pos < 1 || pos > lista->cantidad) return false; 
+
+    int indice = pos - 1;
+
+    for (int i = indice; i < lista->cantidad - 1; i++) {
+        lista->valores[i] = lista->valores[i + 1];
+    }
+    lista->cantidad--;
+    return true;
 }
 
 TipoElemento l_recuperar(Lista lista, int pos) {
+    if (lista == NULL) return NULL;
+    if (pos < 1 || pos > lista->cantidad) return NULL;
+
+    return lista->valores[pos - 1];
 }
 
 void l_mostrar(Lista lista) {

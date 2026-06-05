@@ -11,7 +11,6 @@ Cola crear_cola_desde_array(const int *vector, const int tamano) {
     for (int i = 0; i < tamano; i++) {
         c_encolar(p, te_crear(vector[i]));
     }
-
     return p;
 }
 
@@ -43,10 +42,8 @@ char *cola_como_string(Cola cola, char *(*toStringTipoElemento)(TipoElemento te)
     }
     strcat(result, "]");
 
-    // Se restaura la cola original
     while (!c_es_vacia(auxiliar)) {
         c_encolar(cola, c_desencolar(auxiliar));
     }
-
     return result;
 }

@@ -58,6 +58,8 @@ bool l_es_llena(Lista lista) {
 }
 
 int l_longitud(Lista lista) {
+    if (lista == NULL) return 0;
+    return lista->cantidad;
 }
 
 bool l_agregar(Lista lista, TipoElemento elemento) {
@@ -84,10 +86,43 @@ bool l_agregar(Lista lista, TipoElemento elemento) {
 }
 
 bool l_borrar(Lista lista, int clave) {
+    if (lista == NULL || l_es_vacia(lista)) return false;
+
+    int actual = lista->inicio;
+    int anterior = NULO;
+
+    while (actual != NULO && lista->cursor[actual].datos->clave != clave) {
+        anterior = actual;
+        actual = lista->cursor[actual].siguiente;
+    }
+    if (actual == NULO) {
+        return false;
+    }
+    if (anterior == NULO) {
+        lista->inicio = lista->cursor[actual].siguiente;
+    } else {
+        lista->cursor[anterior].siguiente = lista->cursor[actual].siguiente;
+    }
+
+    lista->cursor[actual].siguiente = lista->libre;
+    lista->libre = actual;
+    lista->cantidad--;
+
+    return true;
 }
 
 
 TipoElemento l_buscar(Lista lista, int clave) {
+    if (lista == NULL) return NULL;
+    int actual = lista->inicio;
+
+    while (actual != NULO) {
+        if (lista->cursor[actual].datos->clave == clave) {
+            return lista->cursor[actual].datos;
+        }
+        actual = lista->cursor[actual].siguiente;
+    }
+    return NULL;
 }
 
 
@@ -116,9 +151,35 @@ bool l_insertar(Lista lista, TipoElemento elemento, int pos) {
 }
 
 bool l_eliminar(Lista lista, int pos) {
+    if (lista == NULL || l_es_vacia(lista) || pos < 1 || pos > lista->cantidad) return false;
+    
+    int actual = lista->inicio;
+    int anterior = NULO;
+
+    for (int i = 1; i < pos; i++) {
+        anterior = actual;
+        actual = lista->cursor[actual].siguiente;
+    }
+
+    if (anterior == NULO) {
+        lista->inicio = lista->cursor[actual].siguiente;
+    } else {
+        lista->cursor[anterior].siguiente = lista->cursor[actual].siguiente;
+    }
+
+    lista->cursor[actual].siguiente = lista->libre;
+    lista->libre = actual;
+    lista->cantidad--;
+
+    return true;
 }
 
 TipoElemento l_recuperar(Lista lista, int pos) {
+    int actual = lista->inicio;
+    for (int i = 1; i < pos; i++) {
+        actual = lista->cursor[actual].siguiente;
+    }
+    return lista->cursor[actual].datos;
 }
 
 void l_mostrar(Lista lista) {
