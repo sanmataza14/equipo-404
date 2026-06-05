@@ -9,11 +9,11 @@
 #include "aserciones.h"
 #include "listas/util_listas.h"
 
-bool listas_eq_fn(Lista l1, Lista l2, int (*comp)(TipoElemento, TipoElemento), char* (*toStr)(TipoElemento)){
+bool listas_eq_fn(Lista l1, Lista l2, bool (*comp)(TipoElemento, TipoElemento), char* (*toStr)(TipoElemento)){
     return true;
 }
 
-int compararRepetido(TipoElemento este, TipoElemento otro) {
+bool compararRepetido(TipoElemento este, TipoElemento otro) {
     struct Repetido *esteRepetido = (struct Repetido *) este->valor;
     struct Repetido *otroPunto = (struct Repetido *) otro->valor;
     return esteRepetido->clave == otroPunto->clave &&

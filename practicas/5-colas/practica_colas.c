@@ -32,7 +32,7 @@ void insertarElemento(Cola c, TipoElemento e, int pos) {
 }
 
 void eliminarElemento(Cola c, int clave){
-    if(c == NULL) return;
+    if(c == NULL || c_es_vacia(c)) return;
     Cola aux = c_crear();
 
     while(!c_es_vacia(c)){
@@ -115,7 +115,6 @@ bool pertenece_a_cola(Cola c, int clave) {
     while (!c_es_vacia(aux)) {
         c_encolar(c, c_desencolar(aux));
     }
-    
     return encontrado;
 }
 

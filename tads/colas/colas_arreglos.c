@@ -71,7 +71,7 @@ void c_mostrar(Cola cola) {
 char *c_to_string(Cola cola) {
     char *resultado = (char *) malloc(sizeof(char) * (cola->final * 10 + 3));
     strcpy(resultado, "[");
-    for (int i = 0; i < cola->final; i++) {
+    for (int i = cola->frente; i < cola->final; i++) {
         char num_str[10];
         sprintf(num_str, "%d", cola->valores[i]->clave);
         strcat(resultado, num_str);
