@@ -95,6 +95,26 @@ Cola copia(Cola c) {
     return nueva;
 }
 
+Cola invertir(Cola c){
+    if (c == NULL || c_es_vacia(c)) return NULL;
+    Cola nueva_cola = c_crear();
+    Cola cola_aux= c_crear();
+    Pila pila_aux = p_crear();
+
+    while(!c_es_vacia(c)) {
+        TipoElemento actual = c_desencolar(c);
+        c_encolar(cola_aux, actual);
+        p_apilar(pila_aux, actual);
+    }
+    while (!c_es_vacia(cola_aux)) {
+    c_encolar(c, c_desencolar(cola_aux));
+    }
+    while (!p_es_vacia(pila_aux)) {
+    c_encolar(nueva_cola, p_desapilar(pila_aux));
+    }
+    return nueva_cola;
+}
+
 // Función auxiliar para ejercicio 8
 bool pertenece_a_cola(Cola c, int clave) {
     if (c == NULL || c_es_vacia(c)) return false;
