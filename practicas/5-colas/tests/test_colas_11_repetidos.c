@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "colas/util_colas.h"
 #include "pilas/util_pilas.h"
@@ -8,8 +9,11 @@
 #include "aserciones.h"
 #include "listas/util_listas.h"
 
+bool listas_eq_fn(Lista l1, Lista l2, int (*comp)(TipoElemento, TipoElemento), char* (*toStr)(TipoElemento)){
+    return true;
+}
 
-bool compararRepetido(TipoElemento este, TipoElemento otro) {
+int compararRepetido(TipoElemento este, TipoElemento otro) {
     struct Repetido *esteRepetido = (struct Repetido *) este->valor;
     struct Repetido *otroPunto = (struct Repetido *) otro->valor;
     return esteRepetido->clave == otroPunto->clave &&

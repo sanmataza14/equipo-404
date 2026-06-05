@@ -20,18 +20,57 @@ void insertarElemento(Cola c, TipoElemento e, int pos) {
             c_encolar(aux, e);
             insertado = true;
         }
-        
         c_encolar(aux, c_desencolar(c));
         actual++;
     }
-
     if (!insertado) {
         c_encolar(aux, e);
     }
-
     while (!c_es_vacia(aux)) {
         c_encolar(c, c_desencolar(aux));
     }
+}
+
+void eliminarElemento(Cola c, int clave){
+    if(c == NULL) return;
+    Cola aux = c_crear();
+
+    while(!c_es_vacia(c)){
+        TipoElemento actual = c_desencolar(c);
+        if(actual->clave != clave){
+            c_encolar(aux, actual);
+        }
+    }
+    while(!c_es_vacia(aux)){
+        c_encolar(c, c_desencolar(aux));
+    }
+}
+
+void eliminarElementoAux(Cola c, int clave) {
+    if (c_es_vacia(c)) return;
+
+    TipoElemento actual = c_desencolar(c);
+    eliminarElementoAux(c, clave);
+
+    if (actual->clave != clave) {
+        c_encolar(c, actual);
+    }
+}
+
+void invertir_colaAux(Cola c) {
+    if (c_es_vacia(c)) return;
+
+    TipoElemento actual = c_desencolar(c);
+    invertir_colaAux(c); 
+    
+    c_encolar(c, actual);
+}
+
+void eliminarElementoRec(Cola c, int clave) {
+    if (c == NULL) return;
+    
+    eliminarElementoAux(c, clave);
+    invertir_colaAux(c);
 }
 
 Cola copia(Cola c) {
