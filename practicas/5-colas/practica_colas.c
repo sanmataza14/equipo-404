@@ -509,3 +509,55 @@ Lista buscaRepetidos(Pila p, Cola c) {
     }
     return l;
 }
+
+Lista procesar(int q, Cola c1, Cola c2, Cola c3){
+    Lista resultado = l_crear();
+    if (c1 == NULL || c2 == NULL || c3 == NULL) return resultado;
+
+    int nro_c1 = 1;
+    int nro_c2 = 1;
+    int nro_c3 = 1;
+
+    while (!c_es_vacia(c1) || !c_es_vacia(c2) || !c_es_vacia(c3)) {
+        
+        if (!c_es_vacia(c1)) {
+            TipoElemento cliente = c_desencolar(c1);
+            cliente->clave -= q;
+
+            if (cliente->clave <= 0) {
+                int codigo = nro_c1 * 10 + 1;
+                l_agregar(resultado, te_crear(codigo));
+                nro_c1++;
+            } else {
+                c_encolar(c1, cliente);
+            }
+        }
+
+        if (!c_es_vacia(c2)) {
+            TipoElemento cliente = c_desencolar(c2);
+            cliente->clave -= q;
+
+            if (cliente->clave <= 0) {
+                int codigo = nro_c2 * 10 + 2;
+                l_agregar(resultado, te_crear(codigo));
+                nro_c2++;
+            } else {
+                c_encolar(c2, cliente);
+            }
+        }
+
+        if (!c_es_vacia(c3)) {
+            TipoElemento cliente = c_desencolar(c3);
+            cliente->clave -= q;
+
+            if (cliente->clave <= 0) {
+                int codigo = nro_c3 * 10 + 3;
+                l_agregar(resultado, te_crear(codigo));
+                nro_c3++;
+            } else {
+                c_encolar(c3, cliente);
+            }
+        }
+    }
+    return resultado;
+}
